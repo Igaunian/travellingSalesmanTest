@@ -1,13 +1,13 @@
 package pages;
 
-import org.openqa.selenium.ElementNotVisibleException;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
 import org.openqa.selenium.support.PageFactory;
 import org.openqa.selenium.support.pagefactory.AjaxElementLocatorFactory;
-import org.openqa.selenium.support.ui.ExpectedCondition;
 import org.openqa.selenium.support.ui.ExpectedConditions;
+
+import java.util.NoSuchElementException;
 
 public class LoginPage extends BasePage {
 
@@ -17,8 +17,10 @@ public class LoginPage extends BasePage {
     private WebElement passwordField;
     @FindBy(xpath = "//span[@class='MuiButton-label' and text() = 'Bejelentkezés']")
     private WebElement loginButton;
-    @FindBy(xpath = "//div[@class='jss53']")
+    @FindBy(xpath = "//span[contains(text(),'Kilépés')]//ancestor::button//preceding-sibling::div")
     private WebElement loggedInUsername;
+    @FindBy(xpath = "//a[contains(text(),'Nincs fiókja? Regisztráljon')]")
+    private WebElement registrationLink;
 
     public LoginPage(WebDriver driver) {
         super(driver);
@@ -39,11 +41,15 @@ public class LoginPage extends BasePage {
         loginButton.click();
     }
 
+    public void clickRegistrationLink() {
+        registrationLink.click();
+    }
+
     public String getUserName() {
         try {
             wait.until(ExpectedConditions.visibilityOf(loggedInUsername));
             return loggedInUsername.getText();
-        } catch (ElementNotVisibleException e) {
+        } catch (NoSuchElementException e) {
             return null;
         }
     }
