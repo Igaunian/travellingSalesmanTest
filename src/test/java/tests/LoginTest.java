@@ -7,15 +7,12 @@ import pages.LoginPage;
 
 public class LoginTest {
 
-    LoginPage loginPage = new LoginPage(BaseTest.driver);
-
-    @BeforeAll
-    public static void setup() {
-        BaseTest.setup();
-    }
+    LoginPage loginPage;
 
     @BeforeEach
     public void setupEach() {
+        BaseTest.setup();
+        loginPage = new LoginPage(BaseTest.driver);
         loginPage.navigateToMainPage();
     }
 
@@ -30,12 +27,8 @@ public class LoginTest {
     }
 
     @AfterEach
-    public void closeDriver() {
-        BaseTest.driver.close();
-    }
-
-    @AfterAll
-    public static void tearDown() {
+    public void quitDriver() {
         BaseTest.tearDown();
     }
+
 }
