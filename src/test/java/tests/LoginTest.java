@@ -49,6 +49,17 @@ public class LoginTest {
         );
     }
 
+    // TODO: implement assert, waiting for error message from frontend
+    @ParameterizedTest
+    @CsvFileSource(resources = "/loginDataInvalidCredentials.csv", numLinesToSkip = 1)
+    public void loginInvalidCredentials(String username, String password) {
+        loginPage.enterUserName(username);
+        loginPage.enterPassword(password);
+        loginPage.clickLoginButton();
+
+        Assertions.assertTrue(true);
+    }
+
     @AfterEach
     public void quitDriver() {
         BaseTest.tearDown();
