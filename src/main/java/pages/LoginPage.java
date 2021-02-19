@@ -1,5 +1,6 @@
 package pages;
 
+import org.openqa.selenium.Keys;
 import org.openqa.selenium.NoSuchElementException;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
@@ -42,6 +43,10 @@ public class LoginPage extends BasePage {
 
     public void clickLoginButton() {
         loginButton.click();
+    }
+
+    public void loginWithEnterKey() {
+        passwordField.sendKeys(Keys.ENTER);
     }
 
     public void clickRegistrationLink() {
