@@ -11,9 +11,9 @@ import org.openqa.selenium.support.ui.ExpectedConditions;
 
 public class LoginPage extends BasePage {
 
-    @FindBy(id = "username")
+    @FindBy(xpath = "//input[@id='username']")
     private WebElement usernameField;
-    @FindBy(id = "password")
+    @FindBy(xpath = "//input[@id='password']")
     private WebElement passwordField;
     @FindBy(xpath = "//span[@class='MuiButton-label' and text() = 'Bejelentkezés']")
     private WebElement loginButton;
@@ -68,5 +68,9 @@ public class LoginPage extends BasePage {
 
     public String getPasswordErrorMessage() {
         return passwordErrorMessage.getText();
+    }
+
+    public boolean isPasswordFieldTypePassword() {
+        return passwordField.getAttribute("type").equals("password");
     }
 }

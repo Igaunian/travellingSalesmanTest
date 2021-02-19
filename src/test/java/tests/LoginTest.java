@@ -6,6 +6,7 @@ import org.junit.jupiter.params.provider.CsvFileSource;
 import pages.LoginPage;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertTrue;
 
 public class LoginTest {
 
@@ -80,6 +81,11 @@ public class LoginTest {
         loginPage.clickLoginButton();
 
         Assertions.assertTrue(true);
+    }
+
+    @Test
+    public void loginPasswordFieldOfTypePassword() {
+        assertTrue(loginPage.isPasswordFieldTypePassword());
     }
 
     @AfterEach
