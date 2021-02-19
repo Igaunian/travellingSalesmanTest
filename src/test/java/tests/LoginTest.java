@@ -25,6 +25,16 @@ public class LoginTest {
 
         Assertions.assertEquals(expectedName, loginPage.getUserName(expectedName));    }
 
+
+    @ParameterizedTest
+    @CsvFileSource(resources = "/loginDataNoPassword.csv", numLinesToSkip = 1)
+    public void loginNoPassword(String username, String expectedMessage) {
+        loginPage.enterUserName(username);
+        loginPage.clickLoginButton();
+
+        Assertions.assertEquals(expectedMessage, loginPage.getPasswordErrorMessage());
+    }
+
     @AfterEach
     public void quitDriver() {
         BaseTest.tearDown();

@@ -20,6 +20,8 @@ public class LoginPage extends BasePage {
     private WebElement loggedInUsername;
     @FindBy(xpath = "//a[contains(text(),'Nincs fiókja? Regisztráljon')]")
     private WebElement registrationLink;
+    @FindBy(xpath = "//p[@id='password-helper-text']")
+    private WebElement passwordErrorMessage;
 
     public LoginPage(WebDriver driver) {
         super(driver);
@@ -51,5 +53,9 @@ public class LoginPage extends BasePage {
         } catch (NoSuchElementException e) {
             return "Username is not visible";
         }
+    }
+
+    public String getPasswordErrorMessage() {
+        return passwordErrorMessage.getText();
     }
 }
