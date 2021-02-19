@@ -25,7 +25,7 @@ public class RegistrationTest {
     }
 
     @ParameterizedTest
-    @CsvFileSource(resources = "/validRegistrationData.csv", numLinesToSkip = 1)
+    @CsvFileSource(resources = "/registrationData.csv", numLinesToSkip = 1)
     public void validRegistrationTest(String data) {
         loginPage.clickRegistrationLink();
 
