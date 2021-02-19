@@ -35,6 +35,20 @@ public class LoginTest {
         Assertions.assertEquals(expectedMessage, loginPage.getPasswordErrorMessage());
     }
 
+    @ParameterizedTest
+    @CsvFileSource(resources = "/loginDataNoCredentials.csv", numLinesToSkip = 1)
+    public void loginNoCredentials(String expectedMessages) {
+        String[] expectedMessagesArray = expectedMessages.split(";");
+        String[] errorMessages = new String[expectedMessagesArray.length];
+
+        loginPage.clickLoginButton();
+
+        errorMessages[0] = loginPage.getUsernameErrorMessage();
+        errorMessages[1] = loginPage.getPasswordErrorMessage();
+
+        Assertions.assertArrayEquals(expectedMessagesArray, errorMessages);
+    }
+
     @AfterEach
     public void quitDriver() {
         BaseTest.tearDown();
