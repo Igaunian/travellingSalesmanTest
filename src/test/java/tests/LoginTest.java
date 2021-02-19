@@ -23,8 +23,7 @@ public class LoginTest {
         loginPage.enterPassword(password);
         loginPage.clickLoginButton();
 
-        Assertions.assertEquals(expectedName, loginPage.getUserName());
-    }
+        Assertions.assertEquals(expectedName, loginPage.getUserName(expectedName));    }
 
     @AfterEach
     public void quitDriver() {

@@ -44,9 +44,9 @@ public class LoginPage extends BasePage {
         registrationLink.click();
     }
 
-    public String getUserName() {
+    public String getUserName(String username) {
         try {
-            wait.until(ExpectedConditions.visibilityOf(loggedInUsername));
+            wait.until(ExpectedConditions.textToBePresentInElement(loggedInUsername, username));
             return loggedInUsername.getText();
         } catch (NoSuchElementException e) {
             return "Username is not visible";
