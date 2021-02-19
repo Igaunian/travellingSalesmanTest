@@ -5,6 +5,8 @@ import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.CsvFileSource;
 import pages.LoginPage;
 
+import static org.junit.jupiter.api.Assertions.assertEquals;
+
 public class LoginTest {
 
     LoginPage loginPage;
@@ -23,7 +25,7 @@ public class LoginTest {
         loginPage.enterPassword(password);
         loginPage.clickLoginButton();
 
-        Assertions.assertEquals(expectedName, loginPage.getUserName(expectedName));    }
+        assertEquals(expectedName, loginPage.getUserName(expectedName));    }
 
 
     @ParameterizedTest
@@ -32,21 +34,19 @@ public class LoginTest {
         loginPage.enterUserName(username);
         loginPage.clickLoginButton();
 
-        Assertions.assertEquals(expectedMessage, loginPage.getPasswordErrorMessage());
+        assertEquals(expectedMessage, loginPage.getPasswordErrorMessage());
     }
 
     @ParameterizedTest
     @CsvFileSource(resources = "/loginDataNoCredentials.csv", numLinesToSkip = 1)
-    public void loginNoCredentials(String expectedMessages) {
-        String[] expectedMessagesArray = expectedMessages.split(";");
-        String[] errorMessages = new String[expectedMessagesArray.length];
+    public void loginNoCredentials(String expectedUsernameError, String expectedPasswordError) {
 
         loginPage.clickLoginButton();
 
-        errorMessages[0] = loginPage.getUsernameErrorMessage();
-        errorMessages[1] = loginPage.getPasswordErrorMessage();
-
-        Assertions.assertArrayEquals(expectedMessagesArray, errorMessages);
+        Assertions.assertAll(
+                () -> assertEquals(expectedUsernameError, loginPage.getUsernameErrorMessage()),
+                () -> assertEquals(expectedPasswordError, loginPage.getPasswordErrorMessage())
+        );
     }
 
     @AfterEach
