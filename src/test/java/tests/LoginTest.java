@@ -25,7 +25,19 @@ public class LoginTest {
         loginPage.enterPassword(password);
         loginPage.clickLoginButton();
 
-        assertEquals(expectedName, loginPage.getUserName(expectedName));    }
+        assertEquals(expectedName, loginPage.getUserName(expectedName));
+    }
+
+    // TODO: implement assert, waiting for error message from frontend
+    @ParameterizedTest
+    @CsvFileSource(resources = "/loginDataInvalidPassword.csv", numLinesToSkip = 1)
+    public void loginInvalidPassword(String username, String password, String expectedName) {
+        loginPage.enterUserName(username);
+        loginPage.enterPassword(password);
+        loginPage.clickLoginButton();
+
+        Assertions.assertTrue(true);
+    }
 
 
     @ParameterizedTest
