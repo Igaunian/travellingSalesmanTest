@@ -72,8 +72,8 @@ public class LoginPage extends BasePage {
         return passwordErrorMessage.getText();
     }
 
-    public void clickLogoutButton() {
-        logoutButton.click();
+    public boolean isPasswordFieldTypePassword() {
+        return passwordField.getAttribute("type").equals("password");
     }
 
     public void clickLogoutButton() {
