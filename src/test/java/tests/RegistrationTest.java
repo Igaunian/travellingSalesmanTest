@@ -25,7 +25,7 @@ public class RegistrationTest {
     }
 
     @ParameterizedTest
-    @CsvFileSource(resources = "/registrationData.csv", numLinesToSkip = 1)
+    @CsvFileSource(resources = "/validRegistrationData.csv", numLinesToSkip = 1)
     public void validRegistrationTest(String data) {
         loginPage.clickRegistrationLink();
 
@@ -36,7 +36,20 @@ public class RegistrationTest {
         registrationPage.fillInTheFields(dataList);
         registrationPage.clickAcceptTermsCheckBox();
         registrationPage.clickRegistrationButton();
-        Assertions.assertTrue(registrationPage.getRegSuccessMessage().contains("Köszönjük a regisztrációt"));
+
+        String successMessage = registrationPage.getRegSuccessMessage();
+
+        loginPage.enterUserName(dataList[0]);
+        loginPage.enterPassword(dataList[2]);
+        loginPage.clickLoginButton();
+        boolean loggedInUsername = loginPage.isUserName(dataList[3] + " " + dataList[4] + " " + dataList[5]);
+        loginPage.clickLogoutButton();
+
+        Assertions.assertAll(
+                () -> Assertions.assertTrue(successMessage.contains("Köszönjük a regisztrációt")),
+                () -> Assertions.assertTrue(loggedInUsername)
+        );
+
     }
 
     @AfterAll
