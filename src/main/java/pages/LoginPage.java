@@ -75,4 +75,9 @@ public class LoginPage extends BasePage {
     public void clickLogoutButton() {
         logoutButton.click();
     }
+
+    public void clickLogoutButton() {
+        logoutButton.click();
+    }
+
 }

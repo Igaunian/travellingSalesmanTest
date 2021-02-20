@@ -26,7 +26,7 @@ public class LoginTest {
         loginPage.enterPassword(password);
         loginPage.clickLoginButton();
 
-        Assertions.assertTrue(loginPage.isUserName(expectedName));
+        assertTrue(loginPage.isUserName(expectedName));
     }
 
     @ParameterizedTest
@@ -36,7 +36,7 @@ public class LoginTest {
         loginPage.enterPassword(password);
         loginPage.loginWithEnterKey();
 
-        Assertions.assertTrue(loginPage.isUserName(expectedName));
+        assertTrue(loginPage.isUserName(expectedName));
     }
 
     // TODO: implement assert, waiting for error message from frontend
