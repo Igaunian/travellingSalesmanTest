@@ -11,9 +11,9 @@ import org.openqa.selenium.support.ui.ExpectedConditions;
 
 public class LoginPage extends BasePage {
 
-    @FindBy(xpath = "//input[@id='username']")
+    @FindBy(id = "username")
     private WebElement usernameField;
-    @FindBy(xpath = "//input[@id='password']")
+    @FindBy(id = "password")
     private WebElement passwordField;
     @FindBy(xpath = "//span[@class='MuiButton-label' and text() = 'Bejelentkezés']")
     private WebElement loginButton;
@@ -25,6 +25,8 @@ public class LoginPage extends BasePage {
     private WebElement usernameErrorMessage;
     @FindBy(xpath = "//p[@id='password-helper-text']")
     private WebElement passwordErrorMessage;
+    @FindBy(xpath = "//span[contains(text(),'Kilépés')]")
+    private WebElement logoutButton;
 
     public LoginPage(WebDriver driver) {
         super(driver);
@@ -53,12 +55,12 @@ public class LoginPage extends BasePage {
         registrationLink.click();
     }
 
-    public String getUserName(String username) {
+    public boolean isUserName(String username) {
         try {
             wait.until(ExpectedConditions.textToBePresentInElement(loggedInUsername, username));
-            return loggedInUsername.getText();
+            return loggedInUsername.getText().equals(username);
         } catch (NoSuchElementException e) {
-            return "Username is not visible";
+            return false;
         }
     }
 
@@ -70,7 +72,7 @@ public class LoginPage extends BasePage {
         return passwordErrorMessage.getText();
     }
 
-    public boolean isPasswordFieldTypePassword() {
-        return passwordField.getAttribute("type").equals("password");
+    public void clickLogoutButton() {
+        logoutButton.click();
     }
 }
