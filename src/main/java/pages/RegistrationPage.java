@@ -29,6 +29,10 @@ public class RegistrationPage extends BasePage {
     private WebElement acceptTermsCheckBox;
     @FindBy(xpath = "//div[@class='MuiAlert-message']")
     private WebElement registrationSuccessMessage;
+    @FindBy(xpath = "//p[contains(text(), 'Csak akkor regisztrálhat, ha elfogadja')]")
+    private WebElement acceptTermsErrorMessage;
+    @FindBy(xpath = "//a[contains(text(), 'Már van fiókja? Bejelentkezés')]")
+    private WebElement loginLink;
 
     public RegistrationPage(WebDriver driver) {
         super(driver);
@@ -73,5 +77,13 @@ public class RegistrationPage extends BasePage {
         } catch (NoSuchElementException e) {
             return null;
         }
+    }
+
+    public boolean isAcceptTermsErrorMessage() {
+        return acceptTermsErrorMessage != null;
+    }
+
+    public void clickLoginLink() {
+        loginLink.click();
     }
 }
