@@ -82,6 +82,34 @@ public class RegistrationTest {
         );
     }
 
+    // TODO: add test data for driving licence, waiting for the implementation decision on frontend
+    @ParameterizedTest
+    @CsvFileSource(resources = "/missingObligatoryRegistrationData.csv", numLinesToSkip = 1)
+    public void registrationTestMissingObligatoryData(String data) {
+        loginPage.clickRegistrationLink();
+
+        RegistrationPage registrationPage = new RegistrationPage(BaseTest.driver);
+
+        String[] dataList = data.split(";");
+
+        registrationPage.fillInTheFields(dataList);
+        registrationPage.clickAcceptTermsCheckBox();
+        registrationPage.clickRegistrationButton();
+        boolean isErrorMessage = registrationPage.isRegistrationFieldErrorMessage();
+
+        registrationPage.clickLoginLink();
+
+        loginPage.enterUserName(dataList[0]);
+        loginPage.enterPassword(dataList[2]);
+        loginPage.clickLoginButton();
+        boolean loggedInUsername = loginPage.isUserName(dataList[3] + " " + dataList[4] + " " + dataList[5]);
+
+        assertAll(
+                () -> assertFalse(loggedInUsername),
+                () -> assertTrue(isErrorMessage)
+        );
+    }
+
     @AfterAll
     public static void tearDown() {
         BaseTest.tearDown();

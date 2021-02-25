@@ -9,6 +9,7 @@ import org.openqa.selenium.support.ui.Select;
 import org.openqa.selenium.support.PageFactory;
 import org.openqa.selenium.support.pagefactory.AjaxElementLocatorFactory;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.NoSuchElementException;
 
@@ -17,8 +18,8 @@ public class RegistrationPage extends BasePage {
     @FindBy(xpath = "//a[contains(text(),'Nincs fiókja? Regisztráljon')]")
     private WebElement registrationLink;
     @FindBy(xpath = "//div[contains(@class, 'MuiTextField-root')]//input")
-    private List<WebElement> regDataFields;
-    private Select sexDropDown = new Select(driver.findElement(By.id("gender")));
+    private List<WebElement> regDataFields = new ArrayList<>();
+    private Select genderDropDown = new Select(driver.findElement(By.id("gender")));
     @FindBy(id = "drivingLicense")
     private WebElement drivingLicenceCheckBox;
     @FindBy(xpath = "//button//span[contains(text(),'Regisztráció')]")
@@ -33,6 +34,8 @@ public class RegistrationPage extends BasePage {
     private WebElement acceptTermsErrorMessage;
     @FindBy(xpath = "//a[contains(text(), 'Már van fiókja? Bejelentkezés')]")
     private WebElement loginLink;
+    @FindBy(xpath = "//p[contains(text(), 'Kötelező')]")
+    private WebElement registrationFieldErrorMessage;
 
     public RegistrationPage(WebDriver driver) {
         super(driver);
@@ -51,7 +54,7 @@ public class RegistrationPage extends BasePage {
             n++;
         }
 
-        sexDropDown.selectByValue(regData[n]);
+        genderDropDown.selectByValue(regData[n]);
 
         if (regData[n + 1].equals("true")) {
             drivingLicenceCheckBox.click();
@@ -85,5 +88,9 @@ public class RegistrationPage extends BasePage {
 
     public void clickLoginLink() {
         loginLink.click();
+    }
+
+    public boolean isRegistrationFieldErrorMessage() {
+        return registrationFieldErrorMessage != null;
     }
 }
