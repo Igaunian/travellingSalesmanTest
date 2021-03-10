@@ -5,8 +5,7 @@ import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.CsvFileSource;
 import pages.LoginPage;
 
-import static org.junit.jupiter.api.Assertions.assertEquals;
-import static org.junit.jupiter.api.Assertions.assertTrue;
+import static org.junit.jupiter.api.Assertions.*;
 
 public class LoginTest {
 
@@ -39,7 +38,6 @@ public class LoginTest {
         assertTrue(loginPage.isUserName(expectedName));
     }
 
-    // TODO: implement assert, waiting for error message from frontend
     @ParameterizedTest
     @CsvFileSource(resources = "/loginDataInvalidPassword.csv", numLinesToSkip = 1)
     public void loginInvalidPassword(String username, String password) {
@@ -47,9 +45,10 @@ public class LoginTest {
         loginPage.enterPassword(password);
         loginPage.clickLoginButton();
 
-        Assertions.assertTrue(true);
-    }
+        boolean loggedInUsername = loginPage.isUserName();
 
+        assertFalse(loggedInUsername);
+    }
 
     @ParameterizedTest
     @CsvFileSource(resources = "/loginDataNoPassword.csv", numLinesToSkip = 1)
@@ -72,7 +71,6 @@ public class LoginTest {
         );
     }
 
-    // TODO: implement assert, waiting for error message from frontend
     @ParameterizedTest
     @CsvFileSource(resources = "/loginDataInvalidCredentials.csv", numLinesToSkip = 1)
     public void loginInvalidCredentials(String username, String password) {
@@ -80,7 +78,9 @@ public class LoginTest {
         loginPage.enterPassword(password);
         loginPage.clickLoginButton();
 
-        Assertions.assertTrue(true);
+        boolean loggedInUsername = loginPage.isUserName();
+
+        assertFalse(loggedInUsername);
     }
 
     @Test

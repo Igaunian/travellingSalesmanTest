@@ -61,6 +61,15 @@ public class LoginPage extends BasePage {
         }
     }
 
+    public boolean isUserName() {
+        try {
+            wait.until(ExpectedConditions.visibilityOf(loggedInUsername));
+            return loggedInUsername.getText() != null;
+        } catch (TimeoutException e) {
+            return false;
+        }
+    }
+
     public String getUsernameErrorMessage() {
         return usernameErrorMessage.getText();
     }
